@@ -1,0 +1,40 @@
+;/**
+;@Author: InariInDream
+;@Date: 2022-11-03 19:16
+;@Description: 
+;**/
+
+DATA SEGMENT
+    BCD1 DB 76H, 54H, 23H, 12H, 34H, 56H, 78H, 90H
+    BCD2 DB 49H, 37H, 15H, 03H, 25H, 47H, 69H, 81H
+    COUNT EQU $-BCD1 ;计算BCD1的长度
+    SUM DB COUNT DUP(?) ;存放结果
+DATA ENDS
+
+CODE SEGMENT
+    
+    ASSUME CS:CODE, DS:DATA
+    START: MOV AX, DATA
+    MOV DS, AX
+    MOV SI, OFFSET BCD1
+    MOV BX, OFFSET BCD2
+    MOV DI, OFFSET SUM
+    CLC
+    MOV AX, COUNT
+    MOV CX, 2
+    DIV CX
+    MOV CX, AX
+LOP1:MOV AL , [SI]
+    ADC AL, [BX]
+    DAA
+    MOV [DI], AL 
+    INC SI 
+    INC BX
+    INC DI ;
+    LOOP LOP1 
+    MOV AH, 09H
+    MOV DX, OFFSET SUM
+    INT 21H
+CODE ENDS
+END START
+

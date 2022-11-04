@@ -1,0 +1,26 @@
+DATAS SEGMENT
+    [1000H] DB 1000 DUP 3 
+DATAS ENDS
+ 
+CODES SEGMENT
+    ASSUME CS:CODES,DS:DATAS
+START:
+    MOV AX,DATAS
+    MOV DS,AX
+    MOV SI,OFFSET [1000H] 
+    MOV AL,[SI]    
+    MOV CX,999
+    
+LOP1:  
+    INC [SI]      
+    CMP AL,[SI]
+    JGE  NEXT
+    MOV AL,[SI] 
+NEXT:
+     LOOP LOP1
+     
+     MOV [2000H],AL    
+    MOV AH,4CH
+    INT 21H
+CODES ENDS
+    END START
