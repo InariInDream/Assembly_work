@@ -1,0 +1,41 @@
+DATA SEGMENT
+    NUM DW 989H
+    ANS DW ?
+DATA ENDS
+
+CODE SEGMENT
+    ASSUME CS:CODE, DS:DATA
+START:
+    MOV AX, DATA
+    MOV DS, AX
+    MOV AX, NUM
+    MOV BX, AX
+    LEA SI, ANS
+    MOV CX, 0FH
+    AND AX, CX
+    MOV [SI], AL    
+
+    MOV AX, BX
+    MOV CX, 0F0H
+    AND AX, CX
+    MOV CX, 04H
+    SHR AX, CL
+    MOV CX, 0AH
+    MUL CX
+    ADD [SI], AL
+
+    MOV AX, BX
+    MOV CX, 0F00H
+    AND AX, CX
+    MOV CX, 08H
+    SHR AX, CL
+    MOV CX, 64H
+    MUL CX
+    CLC
+    ADD [SI], AL
+    ADC [SI+1], AH
+
+    MOV AX, 4C00H
+    INT 21H
+CODE ENDS
+END START
