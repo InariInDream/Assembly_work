@@ -1,0 +1,23 @@
+;/**
+;@Author: InariInDream
+;@Date: 2022-11-17 10:29
+;@Description: 
+;**/
+ASSUME CS:CODE
+CODE SEGMENT
+START:MOV AX, 2000H
+    MOV DS, AX
+    MOV BX, 0
+
+S:  MOV CH, 0
+    MOV CL, [BX]
+    JCXZ OK
+    INC BX
+    JMP SHORT S0
+
+OK: MOV DX, BX
+
+    MOV AX, 4C00H
+    INT 21H
+CODE ENDS
+END START
